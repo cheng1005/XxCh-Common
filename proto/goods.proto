@@ -3,53 +3,248 @@ syntax = "proto3";
 package proto;
 option go_package="./goods";
 
-//添加商品
-message AddGoodsRequest {
-  string image_name =1;
-  string goods_name =2;
-  int64 category_id =3;
-  float price =4;
-  int64 stock =5;
-  int64 status =6;
-  string description =7;
-  int64 brand_id =8;
-  string production_date =9;
-  float promotion_price =10;
-  int64 is_sub =11;
-  int64 expiry_date =12;
-  int64 sales_volume =13;
+message ProductReq {
+  string Name = 1;                // 商品名称
+  uint32 CategoryId = 2;          // 所属分类ID
+  string Description = 3;         // 商品描述
+  double Price = 4;               // 售价
+  double OriginalPrice = 5;       // 原价
+  double CostPrice = 6;           // 成本价
+  int32 Stock = 7;                // 库存
+  string MainImage = 8;           // 主图URL
+  bool IsOnSale = 9;              // 是否上架
+  bool IsHot = 10;                // 是否热销
+  bool IsRecommend = 11;          // 是否推荐
+  repeated ProductImage Images = 12; // 商品图片列表
+  repeated ProductAttribute Attributes = 13; // 商品属性
 }
 
-message AddGoodsResponse {
-}
-//删除商品
-message RemoveGoodsRequest {
-  string goods_id = 1;
+message ProductResp {
+  bool Success = 1;
+  uint32 Id = 2;                  // 创建的商品ID
 }
 
-message RemoveGoodsResponse {
+message ProductListReq {
+  uint32 CategoryId = 1;          // 可选，按分类筛选
+  string Keyword = 2;             // 可选，按关键词搜索
+  int32 Page = 3;                 // 页码
+  int32 PageSize = 4;             // 每页数量
+  enum SortBy {
+    DEFAULT = 0;
+    PRICE_ASC = 1;
+    PRICE_DESC = 2;
+    SALES_DESC = 3;
+    NEWEST = 4;
+  }
+  SortBy Sort = 5;                // 排序方式
+}
+
+message ProductListResp {
+  repeated ProductItem List = 1;
+  int32 Total = 2;                // 总数
+}
+
+message ProductItem {
+  uint32 Id = 1;
+  string Name = 2;
+  uint32 CategoryId = 3;
+  string CategoryName = 4;        // 分类名称
+  double Price = 5;
+  double OriginalPrice = 6;
+  int32 Stock = 7;
+  int32 Sales = 8;
+  string MainImage = 9;
+  bool IsOnSale = 10;
+  bool IsHot = 11;
+  bool IsRecommend = 12;
+}
+
+message ProductImage {
+  string Url = 1;
+  int32 Sort = 2;                 // 排序权重
+}
+
+message ProductAttribute {
+  string Name = 1;                // 属性名(如"颜色")
+  string Value = 2;               // 属性值(如"红色")
+}
+message ProductColumnReq {
+  string Name = 1;                // 栏目名称
+  string Code = 2;                // 栏目代码(英文标识)
+  int32 SortOrder = 3;            // 排序权重
+  bool IsActive = 4;              // 是否启用
+  repeated uint32 CategoryIds = 5; // 关联的分类ID列表
+}
+
+message ProductColumnResp {
+  bool Success = 1;
+  uint32 Id = 2;                  // 创建的栏目ID
+}
+
+message ProductColumnListReq {
+  bool WithCategories = 1;        // 是否包含关联分类
+}
+
+message ProductColumnListResp {
+  repeated ProductColumnItem List = 1;
+}
+
+message ProductColumnItem {
+  uint32 Id = 1;
+  string Name = 2;
+  string Code = 3;
+  int32 SortOrder = 4;
+  bool IsActive = 5;
+  repeated ProductCategoryItem Categories = 6; // 关联的分类
+}
+
+message ColumnProductReq {
+  uint32 ColumnId = 1;            // 栏目ID
+  int32 Limit = 2;                // 获取数量
+}
+
+message ColumnProductResp {
+  repeated ProductItem Products = 1;
+}
+//商品轮播图
+message GoodsCarouselReq {
+  string Title = 1;  //TODO 	轮播图标题
+  string ImageUrl =2; //TODO 图片URL地址
+  string LinkUrl =3; //TODO 	点击跳转链接
+  int64 GoodId =4; //TODO 关联商品ID
+  int64 Sort =5; //TODO 排序权重(越大越靠前)
+  int64 Active =6; //TODO 是否启用
 
 }
-//修改商品
-message UpdateGoodsRequest {
-  string ping = 1;
+
+message GoodsCarouselResp {
+  bool Success =1;;
+}
+//轮播图列表
+message GoodsCarouselListReq {
 }
 
-message UpdateGoodsResponse {
-  string pong = 1;
+message GoodsCarouselListResp {
+  repeated GoodsCarouselList list =1;
 }
-//商品展示
-message ListGoodsRequest {
-  string ping = 1;
+message GoodsCarouselList {
+  string Title = 1;  //TODO 	轮播图标题
+  string ImageUrl =2; //TODO 图片URL地址
+  string LinkUrl =3; //TODO 	点击跳转链接
+  int64 GoodId =4; //TODO 关联商品ID
+  int64 Sort =5; //TODO 排序权重(越大越靠前)
+  int64 Active =6; //TODO 是否启
 }
 
-message ListGoodsResponse {
-  string pong = 1;
+
+
+message ProductCategoryReq {
+  string Name = 1;        // 分类名称
+  uint32 ParentId = 2;    // 父分类ID (0表示一级分类)
+  int32 SortOrder = 3;    // 排序权重(越大越靠前)
+  bool IsActive = 4;      // 是否启用
 }
+
+message ProductCategoryResp {
+  bool Success = 1;
+  uint32 Id = 2;          // 创建的分类ID
+}
+
+
+message ProductCategoryListReq {
+  uint32 ParentId = 1;    // 可选，获取指定父分类下的子分类
+}
+
+message ProductCategoryListResp {
+  repeated ProductCategoryItem List = 1;
+}
+
+message ProductCategoryItem {
+  uint32 Id = 1;
+  string Name = 2;
+  uint32 ParentId = 3;
+  int32 SortOrder = 4;
+  bool IsActive = 5;
+  repeated ProductCategoryItem Children = 6; // 子分类(树形结构)
+}
+
+//商品详情
+message GoodsInfoRequest {
+  int64 goodsId = 1; // 商品编号
+}
+
+message GoodsInfoResponse {
+  int64 goodsId = 1;  // 商品编号
+  string image_name = 2; // 图片地址
+  string goods_name = 3;    // 商品名称
+  int64 category_id = 4;  // 商品分类ID
+  int64 price  = 5;  // 商品分类ID
+  int32 stock = 6;  // 库存数量
+  int32 status = 7;  // 商品状态：0下架/1上架
+  string description = 8;  // 商品描述
+  int64 brand_id = 9;  // 品牌ID
+  int32 is_promotion = 10;  // 是否促销：0否/1是
+  string production_date = 11;  // 生产日期
+  string promotion_price = 12;  // 促销价格
+  int32 is_sub = 13;  // 是否单独分佣
+  int32 expiry_date = 14;  // 保质期天数
+  int32 sales_volume = 15;  // 商品销量
+  string created_at = 16;  // 创建时间
+  string updated_at = 17;  // 修改时间
+  string deleted_at = 18;  // 删除时间
+}
+
+//商品热销榜单
+message HotGoodsListRequest {
+}
+message HotGoodsListResponse {
+  repeated HotGoodsList list = 1;
+}
+message HotGoodsList {
+  int64 goodsId = 1;  // 商品编号
+  string image_name = 2; // 图片地址
+  string goods_name = 3;    // 商品名称
+  int64 category_id = 4;  // 商品分类ID
+  int64 price  = 5;  // 商品分类ID
+  int32 stock = 6;  // 库存数量
+  int32 status = 7;  // 商品状态：0下架/1上架
+  string description = 8;  // 商品描述
+  int64 brand_id = 9;  // 品牌ID
+  int32 is_promotion = 10;  // 是否促销：0否/1是
+  string production_date = 11;  // 生产日期
+  string promotion_price = 12;  // 促销价格
+  int32 is_sub = 13;  // 是否单独分佣
+  int32 expiry_date = 14;  // 保质期天数
+  int32 sales_volume = 15;  // 商品销量
+  string created_at = 16;  // 创建时间
+  string updated_at = 17;  // 修改时间
+  string deleted_at = 18;  // 删除时间
+}
+
 
 service GoodsSrv {
-  rpc AddGoods(AddGoodsRequest) returns(AddGoodsResponse);
-  rpc RemoveGoods(RemoveGoodsRequest) returns(RemoveGoodsResponse);
-  rpc UpdateGoods(UpdateGoodsRequest) returns(UpdateGoodsResponse);
-  rpc ListGoods(ListGoodsRequest) returns(ListGoodsResponse);
+  // 分类管理
+  rpc CreateCategory (ProductCategoryReq) returns (ProductCategoryResp);
+  rpc GetCategoryList (ProductCategoryListReq) returns (ProductCategoryListResp);
+
+  // 商品管理
+  rpc CreateProduct (ProductReq) returns (ProductResp);
+  rpc GetProductList (ProductListReq) returns (ProductListResp);
+
+  // 栏目管理
+  rpc CreateColumn (ProductColumnReq) returns (ProductColumnResp);
+  rpc GetColumnList (ProductColumnListReq) returns (ProductColumnListResp);
+  rpc GetColumnProducts (ColumnProductReq) returns (ColumnProductResp);
+
+
+  //商品详情
+  rpc GoodsInfo(GoodsInfoRequest) returns(GoodsInfoResponse); // 商品详情
+  rpc HotGoodsList(HotGoodsListRequest) returns(HotGoodsListResponse); //商品热销榜单
+
+  //轮播图
+  rpc GoodsCarousel (GoodsCarouselReq) returns (GoodsCarouselResp);   // TODO 添加商品轮播图
+  rpc GoodsCarouselList (GoodsCarouselListReq) returns (GoodsCarouselListResp);   // TODO 添加商品轮播图
+
+
+
 }
