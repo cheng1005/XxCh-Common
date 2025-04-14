@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package proto;
+option go_package="./goods";
+
+//添加商品
+message AddGoodsRequest {
+  string image_name =1;
+  string goods_name =2;
+  int64 category_id =3;
+  float price =4;
+  int64 stock =5;
+  int64 status =6;
+  string description =7;
+  int64 brand_id =8;
+  string production_date =9;
+  float promotion_price =10;
+  int64 is_sub =11;
+  int64 expiry_date =12;
+  int64 sales_volume =13;
+}
+
+message AddGoodsResponse {
+}
+//删除商品
+message RemoveGoodsRequest {
+  string goods_id = 1;
+}
+
+message RemoveGoodsResponse {
+
+}
+//修改商品
+message UpdateGoodsRequest {
+  string ping = 1;
+}
+
+message UpdateGoodsResponse {
+  string pong = 1;
+}
+//商品展示
+message ListGoodsRequest {
+  string ping = 1;
+}
+
+message ListGoodsResponse {
+  string pong = 1;
+}
+
+service GoodsSrv {
+  rpc AddGoods(AddGoodsRequest) returns(AddGoodsResponse);
+  rpc RemoveGoods(RemoveGoodsRequest) returns(RemoveGoodsResponse);
+  rpc UpdateGoods(UpdateGoodsRequest) returns(UpdateGoodsResponse);
+  rpc ListGoods(ListGoodsRequest) returns(ListGoodsResponse);
+}
