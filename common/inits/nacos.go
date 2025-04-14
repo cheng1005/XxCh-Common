@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/cheng1005/XxCh-Common/common/global"
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
+	"log"
 
 	"github.com/nacos-group/nacos-sdk-go/v2/clients"
 	"github.com/nacos-group/nacos-sdk-go/v2/vo"
@@ -52,5 +53,5 @@ func InitNaCos() {
 	if err != nil {
 		zap.L().Error(fmt.Sprintf("json Unmarshal faild,%v", err))
 	}
-
+	log.Println(config)
 }
