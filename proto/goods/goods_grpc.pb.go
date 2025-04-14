@@ -21,8 +21,8 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	GoodsSrv_CreateCategory_FullMethodName     = "/proto.GoodsSrv/CreateCategory"
 	GoodsSrv_GetCategoryList_FullMethodName    = "/proto.GoodsSrv/GetCategoryList"
-	GoodsSrv_CreateProduct_FullMethodName      = "/proto.GoodsSrv/CreateProduct"
-	GoodsSrv_GetProductList_FullMethodName     = "/proto.GoodsSrv/GetProductList"
+	GoodsSrv_GoodsAdd_FullMethodName           = "/proto.GoodsSrv/GoodsAdd"
+	GoodsSrv_SearchList_FullMethodName         = "/proto.GoodsSrv/SearchList"
 	GoodsSrv_GoodsBrandsListPid_FullMethodName = "/proto.GoodsSrv/GoodsBrandsListPid"
 	GoodsSrv_GoodsBrandsList_FullMethodName    = "/proto.GoodsSrv/GoodsBrandsList"
 	GoodsSrv_GoodsBrandsAdd_FullMethodName     = "/proto.GoodsSrv/GoodsBrandsAdd"
@@ -43,8 +43,8 @@ type GoodsSrvClient interface {
 	CreateCategory(ctx context.Context, in *ProductCategoryReq, opts ...grpc.CallOption) (*ProductCategoryResp, error)
 	GetCategoryList(ctx context.Context, in *ProductCategoryListReq, opts ...grpc.CallOption) (*ProductCategoryListResp, error)
 	// 商品管理
-	CreateProduct(ctx context.Context, in *ProductReq, opts ...grpc.CallOption) (*ProductResp, error)
-	GetProductList(ctx context.Context, in *ProductListReq, opts ...grpc.CallOption) (*ProductListResp, error)
+	GoodsAdd(ctx context.Context, in *GoodsAddRequest, opts ...grpc.CallOption) (*GoodsAddResponse, error)
+	SearchList(ctx context.Context, in *GoodsListRequest, opts ...grpc.CallOption) (*GoodsListResponse, error)
 	// 商品品牌
 	GoodsBrandsListPid(ctx context.Context, in *GoodsBrandsListPidReq, opts ...grpc.CallOption) (*GoodsBrandsListPidResp, error)
 	GoodsBrandsList(ctx context.Context, in *GoodsBrandsListReq, opts ...grpc.CallOption) (*GoodsBrandsListResp, error)
@@ -89,20 +89,20 @@ func (c *goodsSrvClient) GetCategoryList(ctx context.Context, in *ProductCategor
 	return out, nil
 }
 
-func (c *goodsSrvClient) CreateProduct(ctx context.Context, in *ProductReq, opts ...grpc.CallOption) (*ProductResp, error) {
+func (c *goodsSrvClient) GoodsAdd(ctx context.Context, in *GoodsAddRequest, opts ...grpc.CallOption) (*GoodsAddResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ProductResp)
-	err := c.cc.Invoke(ctx, GoodsSrv_CreateProduct_FullMethodName, in, out, cOpts...)
+	out := new(GoodsAddResponse)
+	err := c.cc.Invoke(ctx, GoodsSrv_GoodsAdd_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *goodsSrvClient) GetProductList(ctx context.Context, in *ProductListReq, opts ...grpc.CallOption) (*ProductListResp, error) {
+func (c *goodsSrvClient) SearchList(ctx context.Context, in *GoodsListRequest, opts ...grpc.CallOption) (*GoodsListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ProductListResp)
-	err := c.cc.Invoke(ctx, GoodsSrv_GetProductList_FullMethodName, in, out, cOpts...)
+	out := new(GoodsListResponse)
+	err := c.cc.Invoke(ctx, GoodsSrv_SearchList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -217,8 +217,8 @@ type GoodsSrvServer interface {
 	CreateCategory(context.Context, *ProductCategoryReq) (*ProductCategoryResp, error)
 	GetCategoryList(context.Context, *ProductCategoryListReq) (*ProductCategoryListResp, error)
 	// 商品管理
-	CreateProduct(context.Context, *ProductReq) (*ProductResp, error)
-	GetProductList(context.Context, *ProductListReq) (*ProductListResp, error)
+	GoodsAdd(context.Context, *GoodsAddRequest) (*GoodsAddResponse, error)
+	SearchList(context.Context, *GoodsListRequest) (*GoodsListResponse, error)
 	// 商品品牌
 	GoodsBrandsListPid(context.Context, *GoodsBrandsListPidReq) (*GoodsBrandsListPidResp, error)
 	GoodsBrandsList(context.Context, *GoodsBrandsListReq) (*GoodsBrandsListResp, error)
@@ -246,11 +246,11 @@ func (UnimplementedGoodsSrvServer) CreateCategory(context.Context, *ProductCateg
 func (UnimplementedGoodsSrvServer) GetCategoryList(context.Context, *ProductCategoryListReq) (*ProductCategoryListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryList not implemented")
 }
-func (UnimplementedGoodsSrvServer) CreateProduct(context.Context, *ProductReq) (*ProductResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateProduct not implemented")
+func (UnimplementedGoodsSrvServer) GoodsAdd(context.Context, *GoodsAddRequest) (*GoodsAddResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GoodsAdd not implemented")
 }
-func (UnimplementedGoodsSrvServer) GetProductList(context.Context, *ProductListReq) (*ProductListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetProductList not implemented")
+func (UnimplementedGoodsSrvServer) SearchList(context.Context, *GoodsListRequest) (*GoodsListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchList not implemented")
 }
 func (UnimplementedGoodsSrvServer) GoodsBrandsListPid(context.Context, *GoodsBrandsListPidReq) (*GoodsBrandsListPidResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GoodsBrandsListPid not implemented")
@@ -331,38 +331,38 @@ func _GoodsSrv_GetCategoryList_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GoodsSrv_CreateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProductReq)
+func _GoodsSrv_GoodsAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoodsAddRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoodsSrvServer).CreateProduct(ctx, in)
+		return srv.(GoodsSrvServer).GoodsAdd(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GoodsSrv_CreateProduct_FullMethodName,
+		FullMethod: GoodsSrv_GoodsAdd_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoodsSrvServer).CreateProduct(ctx, req.(*ProductReq))
+		return srv.(GoodsSrvServer).GoodsAdd(ctx, req.(*GoodsAddRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GoodsSrv_GetProductList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProductListReq)
+func _GoodsSrv_SearchList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoodsListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GoodsSrvServer).GetProductList(ctx, in)
+		return srv.(GoodsSrvServer).SearchList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GoodsSrv_GetProductList_FullMethodName,
+		FullMethod: GoodsSrv_SearchList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoodsSrvServer).GetProductList(ctx, req.(*ProductListReq))
+		return srv.(GoodsSrvServer).SearchList(ctx, req.(*GoodsListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -563,12 +563,12 @@ var GoodsSrv_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GoodsSrv_GetCategoryList_Handler,
 		},
 		{
-			MethodName: "CreateProduct",
-			Handler:    _GoodsSrv_CreateProduct_Handler,
+			MethodName: "GoodsAdd",
+			Handler:    _GoodsSrv_GoodsAdd_Handler,
 		},
 		{
-			MethodName: "GetProductList",
-			Handler:    _GoodsSrv_GetProductList_Handler,
+			MethodName: "SearchList",
+			Handler:    _GoodsSrv_SearchList_Handler,
 		},
 		{
 			MethodName: "GoodsBrandsListPid",

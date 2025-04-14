@@ -3,47 +3,54 @@ syntax = "proto3";
 package proto;
 option go_package="./goods";
 
+//商品模块
 //商品添加
-message ProductReq {
-  string Name = 1;                // 商品名称
-  uint32 CategoryId = 2;          // 所属分类ID
-  string Description = 3;         // 商品描述
-  double Price = 4;               // 售价
-  double OriginalPrice = 5;       // 原价
-  double CostPrice = 6;           // 成本价
-  int32 Stock = 7;                // 库存
-  string MainImage = 8;           // 主图URL
-  bool IsOnSale = 9;              // 是否上架
-  bool IsHot = 10;                // 是否热销
-  bool IsRecommend = 11;          // 是否推荐
-  repeated ProductImage Images = 12; // 商品图片列表
-  repeated ProductAttribute Attributes = 13; // 商品属性
-}
-message ProductResp {
-  bool Success = 1;
-  uint32 Id = 2;                  // 创建的商品ID
+message GoodsAddRequest {
+  string ImageName = 1;
+  string GoodsName = 2;
+  int64  CategoryId = 3;
+  float  Price = 4;
+  int64  Stock = 5;
+  int64  Status = 6;
+  string Description = 7;
+  int64  BrandId = 8;
+  int64  IsPromotion = 9;
+  string ProductionDates = 10;
+  float  PromotionPrice = 11;
+  int64  IsSub = 12;
+  int64  ExpiryDate = 13;
+  int64  SalesVolume = 14;
+
 }
 
-//商品列表
-message ProductListReq {
-  uint32 CategoryId = 1;          // 可选，按分类筛选
-  string Keyword = 2;             // 可选，按关键词搜索
-  int32 Page = 3;                 // 页码
-  int32 PageSize = 4;             // 每页数量
-  enum SortBy {
-    DEFAULT = 0;
-    PRICE_ASC = 1;
-    PRICE_DESC = 2;
-    SALES_DESC = 3;
-    NEWEST = 4;
-  }
-  SortBy Sort = 5;                // 排序方式
+message GoodsAddResponse {
+
 }
-message ProductListResp {
-  repeated ProductItem List = 1;
-  int32 Total = 2;                // 总数
+//商品展示
+message GoodsListRequest {
+  string GoodsName = 1;
+}
+message GoodsList{
+  int64  Id = 1;
+  string ImageName = 2;
+  string GoodsName = 3;
+  int64  CategoryId = 4;
+  float  Price = 5;
+  int64  Stock = 6;
+  int64  Status = 7;
+  string Description = 8;
+  int64  BrandId = 9;
+  int64  IsPromotion = 10;
+  string ProductionDates = 11;
+  float  PromotionPrice = 12;
+  int64  IsSub = 13;
+  int64  ExpiryDate = 14;
+  int64  SalesVolume = 15;
 }
 
+message GoodsListResponse {
+  repeated GoodsList list = 1;
+}
 //商品品牌
 message GoodsBrandsListPidReq{
   int64 Pid=1;
@@ -276,8 +283,8 @@ service GoodsSrv {
   rpc GetCategoryList (ProductCategoryListReq) returns (ProductCategoryListResp);
 
   // 商品管理
-  rpc CreateProduct (ProductReq) returns (ProductResp);
-  rpc GetProductList (ProductListReq) returns (ProductListResp);
+  rpc GoodsAdd(GoodsAddRequest) returns(GoodsAddResponse);
+  rpc SearchList(GoodsListRequest) returns(GoodsListResponse);
 
   //商品品牌
   rpc GoodsBrandsListPid(GoodsBrandsListPidReq)returns(GoodsBrandsListPidResp);
