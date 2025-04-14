@@ -185,9 +185,12 @@ message GoodsCarouselList {
 //商品分类
 message ProductCategoryReq {
   string Name = 1;        // 分类名称
-  uint32 ParentId = 2;    // 父分类ID (0表示一级分类)
-  int32 SortOrder = 3;    // 排序权重(越大越靠前)
-  bool IsActive = 4;      // 是否启用
+  string  CategoryUrl         =2;           // 分类的图片地址
+  string  CategoryDescription =3;           // 商品分类描述
+  int32  CategoryRecommend   =4;           // 是否推荐
+  uint32 ParentId = 5;    // 父分类ID (0表示一级分类)
+  int32 SortOrder = 6;    // 排序权重(越大越靠前)
+  int32 IsActive = 7;      // 是否启用
 }
 message ProductCategoryResp {
   bool Success = 1;
@@ -202,12 +205,13 @@ message ProductCategoryListResp {
 }
 
 message ProductCategoryItem {
-  uint32 Id = 1;
-  string Name = 2;
-  uint32 ParentId = 3;
-  int32 SortOrder = 4;
-  bool IsActive = 5;
-  repeated ProductCategoryItem Children = 6; // 子分类(树形结构)
+  string Name = 1;        // 分类名称
+  string  CategoryUrl         =2;           // 分类的图片地址
+  string  CategoryDescription =3;           // 商品分类描述
+  int32  CategoryRecommend   =4;           // 是否推荐
+  uint32 ParentId = 5;    // 父分类ID (0表示一级分类)
+  int32 SortOrder = 6;    // 排序权重(越大越靠前)
+  int32 IsActive = 7;      // 是否启用
 }
 
 //商品详情

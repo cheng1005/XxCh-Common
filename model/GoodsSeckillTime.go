@@ -12,8 +12,8 @@ type Goodsseckilltime struct {
 	CreatedAt        time.Time      `gorm:"column:created_at;type:datetime(3);comment:创建的时间;not null;" json:"created_at"`              // 创建的时间
 	UpdatedAt        time.Time      `gorm:"column:updated_at;type:datetime(3);comment:修改的时间;not null;" json:"updated_at"`              // 修改的时间
 	DeletedAt        gorm.DeletedAt `gorm:"column:deleted_at;type:datetime(3);comment:删除的时间;default:NULL;" json:"deleted_at"`          // 删除的时间
-	StartTime        time.Time      `gorm:"column:start_time;type:datetime(3);comment:秒杀开始的时间;not null;" json:"start_time"`            // 秒杀开始的时间
-	EndTime          time.Time      `gorm:"column:end_time;type:datetime(3);comment:秒杀结束的时间;not null;" json:"end_time"`                // 秒杀结束的时间
+	StartTime        string         `gorm:"column:start_time;type:varchar(225);comment:秒杀开始的时间;not null;" json:"start_time"`           // 秒杀开始的时间
+	EndTime          string         `gorm:"column:end_time;type:varchar(225);comment:秒杀结束的时间;not null;" json:"end_time"`               // 秒杀结束的时间
 }
 
 func (g *Goodsseckilltime) TableName() string {
