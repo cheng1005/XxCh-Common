@@ -3,6 +3,7 @@ syntax = "proto3";
 package proto;
 option go_package="./goods";
 
+//商品添加
 message ProductReq {
   string Name = 1;                // 商品名称
   uint32 CategoryId = 2;          // 所属分类ID
@@ -18,12 +19,12 @@ message ProductReq {
   repeated ProductImage Images = 12; // 商品图片列表
   repeated ProductAttribute Attributes = 13; // 商品属性
 }
-
 message ProductResp {
   bool Success = 1;
   uint32 Id = 2;                  // 创建的商品ID
 }
 
+//商品列表
 message ProductListReq {
   uint32 CategoryId = 1;          // 可选，按分类筛选
   string Keyword = 2;             // 可选，按关键词搜索
@@ -38,10 +39,46 @@ message ProductListReq {
   }
   SortBy Sort = 5;                // 排序方式
 }
-
 message ProductListResp {
   repeated ProductItem List = 1;
   int32 Total = 2;                // 总数
+}
+
+//商品品牌
+message GoodsBrandsListPidReq{
+  int64 Pid=1;
+}
+message GoodsBrandsListPidResp{
+  repeated GoodsBrandsListPid List=1;
+}
+message GoodsBrandsListPid {
+  int64 Id  =1;    // 评论id
+  int64 Pid   =2;    // 父id
+  string GoodsBrands  =3;    // 评论内容
+}
+
+message GoodsBrandsListReq{
+  int64 Pid=1;
+}
+message GoodsBrandsListResp{
+  repeated GoodsBrandsList List=1;
+}
+message GoodsBrandsList {
+  int64 Id  =1;    // 评论id
+  int64 Pid   =2;    // 父id
+  string GoodsBrands  =3;    // 评论内容
+}
+message GoodsBrandsAddReq{
+  string  BrandName            =1; // 品牌名称
+  string  BrandFirstLetter     =2; // 品牌首字母
+  string  BrandImage           =3; // 品牌图片，存储图片路径等信息
+  int64  BrandSort            =4; // 品牌排序
+  int64  DisplayStatus        =5; // 显示状态，1表示显示，0表示不显示
+  string  BrandDescription     =6; // 品牌描述
+
+}
+message GoodsBrandsAddResp{
+  int64 GoodBrand=1;
 }
 
 message ProductItem {
@@ -68,6 +105,8 @@ message ProductAttribute {
   string Name = 1;                // 属性名(如"颜色")
   string Value = 2;               // 属性值(如"红色")
 }
+
+//商品栏目
 message ProductColumnReq {
   string Name = 1;                // 栏目名称
   string Code = 2;                // 栏目代码(英文标识)
@@ -75,7 +114,6 @@ message ProductColumnReq {
   bool IsActive = 4;              // 是否启用
   repeated uint32 CategoryIds = 5; // 关联的分类ID列表
 }
-
 message ProductColumnResp {
   bool Success = 1;
   uint32 Id = 2;                  // 创建的栏目ID
@@ -106,6 +144,7 @@ message ColumnProductReq {
 message ColumnProductResp {
   repeated ProductItem Products = 1;
 }
+
 //商品轮播图
 message GoodsCarouselReq {
   string Title = 1;  //TODO 	轮播图标题
@@ -116,14 +155,13 @@ message GoodsCarouselReq {
   int64 Active =6; //TODO 是否启用
 
 }
-
 message GoodsCarouselResp {
   bool Success =1;;
 }
+
 //轮播图列表
 message GoodsCarouselListReq {
 }
-
 message GoodsCarouselListResp {
   repeated GoodsCarouselList list =1;
 }
@@ -136,25 +174,21 @@ message GoodsCarouselList {
   int64 Active =6; //TODO 是否启
 }
 
-
-
+//商品分类
 message ProductCategoryReq {
   string Name = 1;        // 分类名称
   uint32 ParentId = 2;    // 父分类ID (0表示一级分类)
   int32 SortOrder = 3;    // 排序权重(越大越靠前)
   bool IsActive = 4;      // 是否启用
 }
-
 message ProductCategoryResp {
   bool Success = 1;
   uint32 Id = 2;          // 创建的分类ID
 }
 
-
 message ProductCategoryListReq {
   uint32 ParentId = 1;    // 可选，获取指定父分类下的子分类
 }
-
 message ProductCategoryListResp {
   repeated ProductCategoryItem List = 1;
 }
@@ -231,6 +265,11 @@ service GoodsSrv {
   rpc CreateProduct (ProductReq) returns (ProductResp);
   rpc GetProductList (ProductListReq) returns (ProductListResp);
 
+  //商品品牌
+  rpc GoodsBrandsListPid(GoodsBrandsListPidReq)returns(GoodsBrandsListPidResp);
+  rpc GoodsBrandsList(GoodsBrandsListReq)returns(GoodsBrandsListResp);
+  rpc GoodsBrandsAdd(GoodsBrandsAddReq)returns(GoodsBrandsAddResp);
+
   // 栏目管理
   rpc CreateColumn (ProductColumnReq) returns (ProductColumnResp);
   rpc GetColumnList (ProductColumnListReq) returns (ProductColumnListResp);
@@ -244,7 +283,5 @@ service GoodsSrv {
   //轮播图
   rpc GoodsCarousel (GoodsCarouselReq) returns (GoodsCarouselResp);   // TODO 添加商品轮播图
   rpc GoodsCarouselList (GoodsCarouselListReq) returns (GoodsCarouselListResp);   // TODO 添加商品轮播图
-
-
 
 }
