@@ -1,7 +1,9 @@
 package model
 
-import "time"
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+	"time"
+)
 
 type Goods struct {
 	Id             uint64         `gorm:"column:id;type:bigint UNSIGNED;comment:商品ID;primaryKey;not null;" json:"id"`                               // 商品ID
@@ -14,7 +16,7 @@ type Goods struct {
 	Description    string         `gorm:"column:description;type:text;comment:商品描述;" json:"description"`                                            // 商品描述
 	BrandId        int64          `gorm:"column:brand_id;type:bigint;comment:品牌ID;not null;" json:"brand_id"`                                       // 品牌ID
 	IsPromotion    uint8          `gorm:"column:is_promotion;type:tinyint(3) UNSIGNED ZEROFILL;comment:是否促销：0否/1是;not null;" json:"is_promotion"`   // 是否促销：0否/1是
-	ProductionDate time.Time      `gorm:"column:production_date;type:date;comment:生产日期;not null;" json:"production_date"`                           // 生产日期
+	ProductionDate string         `gorm:"column:production_date;type:varchar(255);comment:生产日期;not null;" json:"production_date"`                   // 生产日期
 	PromotionPrice float64        `gorm:"column:promotion_price;type:decimal(10, 2);comment:促销价格;not null;" json:"promotion_price"`                 // 促销价格
 	IsSub          int8           `gorm:"column:is_sub;type:tinyint(1);comment:是否单独分佣;not null;default:0;" json:"is_sub"`                           // 是否单独分佣
 	ExpiryDate     int32          `gorm:"column:expiry_date;type:int;comment:保质期天数;not null;" json:"expiry_date"`                                   // 保质期天数

@@ -163,6 +163,8 @@ message GoodsCarouselReq {
   int64 Active =6; //TODO 是否启用
 
 }
+
+
 message GoodsCarouselResp {
   bool Success =1;;
 }
