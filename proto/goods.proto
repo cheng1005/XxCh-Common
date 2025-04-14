@@ -52,9 +52,13 @@ message GoodsBrandsListPidResp{
   repeated GoodsBrandsListPid List=1;
 }
 message GoodsBrandsListPid {
-  int64 Id  =1;    // 评论id
-  int64 Pid   =2;    // 父id
-  string GoodsBrands  =3;    // 评论内容
+  string  BrandName            =1; // 品牌名称
+  string  BrandFirstLetter     =2; // 品牌首字母
+  string  BrandImage           =3; // 品牌图片，存储图片路径等信息
+  int64  BrandSort            =4; // 品牌排序
+  int64  DisplayStatus        =5; // 显示状态，1表示显示，0表示不显示
+  string  BrandDescription     =6; // 品牌描述
+
 }
 
 message GoodsBrandsListReq{
@@ -64,9 +68,13 @@ message GoodsBrandsListResp{
   repeated GoodsBrandsList List=1;
 }
 message GoodsBrandsList {
-  int64 Id  =1;    // 评论id
-  int64 Pid   =2;    // 父id
-  string GoodsBrands  =3;    // 评论内容
+  string  BrandName            =1; // 品牌名称
+  string  BrandFirstLetter     =2; // 品牌首字母
+  string  BrandImage           =3; // 品牌图片，存储图片路径等信息
+  int64  BrandSort            =4; // 品牌排序
+  int64  DisplayStatus        =5; // 显示状态，1表示显示，0表示不显示
+  string  BrandDescription     =6; // 品牌描述
+
 }
 message GoodsBrandsAddReq{
   string  BrandName            =1; // 品牌名称
