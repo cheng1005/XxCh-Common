@@ -265,7 +265,8 @@ message HotGoodsList {
 
 //新品推荐
 message NewGoodsRequest {
-
+  string OrderBy = 1;
+  string GoodsName = 2;
 }
 message NewGoodsResponse {
   repeated GoodsList NewGoodsList = 1;
