@@ -10,7 +10,7 @@ type Goods struct {
 	ImageName      string         `gorm:"column:image_name;type:varchar(255);comment:图片地址;not null;" json:"image_name"`                             // 图片地址
 	GoodsName      string         `gorm:"column:goods_name;type:varchar(255);comment:商品名称;not null;" json:"goods_name"`                             // 商品名称
 	CategoryId     int64          `gorm:"column:category_id;type:bigint;comment:商品分类ID;not null;" json:"category_id"`                               // 商品分类ID
-	Price          uint32         `gorm:"column:price;type:decimal(10, 2) UNSIGNED ZEROFILL;comment:销售价格;not null;" json:"price"`                   // 销售价格
+	Price          float32        `gorm:"column:price;type:decimal(10, 2) UNSIGNED ZEROFILL;comment:销售价格;not null;" json:"price"`                   // 销售价格
 	Stock          uint32         `gorm:"column:stock;type:int(11) UNSIGNED ZEROFILL;comment:库存数量;not null;" json:"stock"`                          // 库存数量
 	Status         uint8          `gorm:"column:status;type:tinyint(1) UNSIGNED ZEROFILL;comment:商品状态：0下架/1上架;not null;" json:"status"`             // 商品状态：0下架/1上架
 	Description    string         `gorm:"column:description;type:text;comment:商品描述;" json:"description"`                                            // 商品描述
