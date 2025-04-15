@@ -19,20 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	GoodsSrv_CreateCategory_FullMethodName     = "/proto.GoodsSrv/CreateCategory"
-	GoodsSrv_GetCategoryList_FullMethodName    = "/proto.GoodsSrv/GetCategoryList"
-	GoodsSrv_GoodsAdd_FullMethodName           = "/proto.GoodsSrv/GoodsAdd"
-	GoodsSrv_SearchList_FullMethodName         = "/proto.GoodsSrv/SearchList"
-	GoodsSrv_GoodsBrandsListPid_FullMethodName = "/proto.GoodsSrv/GoodsBrandsListPid"
-	GoodsSrv_GoodsBrandsList_FullMethodName    = "/proto.GoodsSrv/GoodsBrandsList"
-	GoodsSrv_GoodsBrandsAdd_FullMethodName     = "/proto.GoodsSrv/GoodsBrandsAdd"
-	GoodsSrv_CreateColumn_FullMethodName       = "/proto.GoodsSrv/CreateColumn"
-	GoodsSrv_GetColumnList_FullMethodName      = "/proto.GoodsSrv/GetColumnList"
-	GoodsSrv_GetColumnProducts_FullMethodName  = "/proto.GoodsSrv/GetColumnProducts"
-	GoodsSrv_GoodsInfo_FullMethodName          = "/proto.GoodsSrv/GoodsInfo"
-	GoodsSrv_HotGoodsList_FullMethodName       = "/proto.GoodsSrv/HotGoodsList"
-	GoodsSrv_GoodsCarousel_FullMethodName      = "/proto.GoodsSrv/GoodsCarousel"
-	GoodsSrv_GoodsCarouselList_FullMethodName  = "/proto.GoodsSrv/GoodsCarouselList"
+	GoodsSrv_CreateCategory_FullMethodName    = "/proto.GoodsSrv/CreateCategory"
+	GoodsSrv_GetCategoryList_FullMethodName   = "/proto.GoodsSrv/GetCategoryList"
+	GoodsSrv_GoodsAdd_FullMethodName          = "/proto.GoodsSrv/GoodsAdd"
+	GoodsSrv_SearchList_FullMethodName        = "/proto.GoodsSrv/SearchList"
+	GoodsSrv_GoodsBrandsList_FullMethodName   = "/proto.GoodsSrv/GoodsBrandsList"
+	GoodsSrv_GoodsBrandsAdd_FullMethodName    = "/proto.GoodsSrv/GoodsBrandsAdd"
+	GoodsSrv_CreateColumn_FullMethodName      = "/proto.GoodsSrv/CreateColumn"
+	GoodsSrv_GetColumnList_FullMethodName     = "/proto.GoodsSrv/GetColumnList"
+	GoodsSrv_GetColumnProducts_FullMethodName = "/proto.GoodsSrv/GetColumnProducts"
+	GoodsSrv_GoodsInfo_FullMethodName         = "/proto.GoodsSrv/GoodsInfo"
+	GoodsSrv_HotGoodsList_FullMethodName      = "/proto.GoodsSrv/HotGoodsList"
+	GoodsSrv_GoodsCarousel_FullMethodName     = "/proto.GoodsSrv/GoodsCarousel"
+	GoodsSrv_GoodsCarouselList_FullMethodName = "/proto.GoodsSrv/GoodsCarouselList"
+	GoodsSrv_NewGoods_FullMethodName          = "/proto.GoodsSrv/NewGoods"
 )
 
 // GoodsSrvClient is the client API for GoodsSrv service.
@@ -46,7 +46,6 @@ type GoodsSrvClient interface {
 	GoodsAdd(ctx context.Context, in *GoodsAddRequest, opts ...grpc.CallOption) (*GoodsAddResponse, error)
 	SearchList(ctx context.Context, in *GoodsListRequest, opts ...grpc.CallOption) (*GoodsListResponse, error)
 	// 商品品牌
-	GoodsBrandsListPid(ctx context.Context, in *GoodsBrandsListPidReq, opts ...grpc.CallOption) (*GoodsBrandsListPidResp, error)
 	GoodsBrandsList(ctx context.Context, in *GoodsBrandsListReq, opts ...grpc.CallOption) (*GoodsBrandsListResp, error)
 	GoodsBrandsAdd(ctx context.Context, in *GoodsBrandsAddReq, opts ...grpc.CallOption) (*GoodsBrandsAddResp, error)
 	// 栏目管理
@@ -59,6 +58,8 @@ type GoodsSrvClient interface {
 	// 轮播图
 	GoodsCarousel(ctx context.Context, in *GoodsCarouselReq, opts ...grpc.CallOption) (*GoodsCarouselResp, error)
 	GoodsCarouselList(ctx context.Context, in *GoodsCarouselListReq, opts ...grpc.CallOption) (*GoodsCarouselListResp, error)
+	// TODO 新品推荐
+	NewGoods(ctx context.Context, in *NewGoodsRequest, opts ...grpc.CallOption) (*NewGoodsResponse, error)
 }
 
 type goodsSrvClient struct {
@@ -103,16 +104,6 @@ func (c *goodsSrvClient) SearchList(ctx context.Context, in *GoodsListRequest, o
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GoodsListResponse)
 	err := c.cc.Invoke(ctx, GoodsSrv_SearchList_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *goodsSrvClient) GoodsBrandsListPid(ctx context.Context, in *GoodsBrandsListPidReq, opts ...grpc.CallOption) (*GoodsBrandsListPidResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GoodsBrandsListPidResp)
-	err := c.cc.Invoke(ctx, GoodsSrv_GoodsBrandsListPid_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -209,6 +200,16 @@ func (c *goodsSrvClient) GoodsCarouselList(ctx context.Context, in *GoodsCarouse
 	return out, nil
 }
 
+func (c *goodsSrvClient) NewGoods(ctx context.Context, in *NewGoodsRequest, opts ...grpc.CallOption) (*NewGoodsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(NewGoodsResponse)
+	err := c.cc.Invoke(ctx, GoodsSrv_NewGoods_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GoodsSrvServer is the server API for GoodsSrv service.
 // All implementations must embed UnimplementedGoodsSrvServer
 // for forward compatibility
@@ -220,7 +221,6 @@ type GoodsSrvServer interface {
 	GoodsAdd(context.Context, *GoodsAddRequest) (*GoodsAddResponse, error)
 	SearchList(context.Context, *GoodsListRequest) (*GoodsListResponse, error)
 	// 商品品牌
-	GoodsBrandsListPid(context.Context, *GoodsBrandsListPidReq) (*GoodsBrandsListPidResp, error)
 	GoodsBrandsList(context.Context, *GoodsBrandsListReq) (*GoodsBrandsListResp, error)
 	GoodsBrandsAdd(context.Context, *GoodsBrandsAddReq) (*GoodsBrandsAddResp, error)
 	// 栏目管理
@@ -233,6 +233,8 @@ type GoodsSrvServer interface {
 	// 轮播图
 	GoodsCarousel(context.Context, *GoodsCarouselReq) (*GoodsCarouselResp, error)
 	GoodsCarouselList(context.Context, *GoodsCarouselListReq) (*GoodsCarouselListResp, error)
+	// TODO 新品推荐
+	NewGoods(context.Context, *NewGoodsRequest) (*NewGoodsResponse, error)
 	mustEmbedUnimplementedGoodsSrvServer()
 }
 
@@ -251,9 +253,6 @@ func (UnimplementedGoodsSrvServer) GoodsAdd(context.Context, *GoodsAddRequest) (
 }
 func (UnimplementedGoodsSrvServer) SearchList(context.Context, *GoodsListRequest) (*GoodsListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchList not implemented")
-}
-func (UnimplementedGoodsSrvServer) GoodsBrandsListPid(context.Context, *GoodsBrandsListPidReq) (*GoodsBrandsListPidResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GoodsBrandsListPid not implemented")
 }
 func (UnimplementedGoodsSrvServer) GoodsBrandsList(context.Context, *GoodsBrandsListReq) (*GoodsBrandsListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GoodsBrandsList not implemented")
@@ -281,6 +280,9 @@ func (UnimplementedGoodsSrvServer) GoodsCarousel(context.Context, *GoodsCarousel
 }
 func (UnimplementedGoodsSrvServer) GoodsCarouselList(context.Context, *GoodsCarouselListReq) (*GoodsCarouselListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GoodsCarouselList not implemented")
+}
+func (UnimplementedGoodsSrvServer) NewGoods(context.Context, *NewGoodsRequest) (*NewGoodsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method NewGoods not implemented")
 }
 func (UnimplementedGoodsSrvServer) mustEmbedUnimplementedGoodsSrvServer() {}
 
@@ -363,24 +365,6 @@ func _GoodsSrv_SearchList_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GoodsSrvServer).SearchList(ctx, req.(*GoodsListRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GoodsSrv_GoodsBrandsListPid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GoodsBrandsListPidReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GoodsSrvServer).GoodsBrandsListPid(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GoodsSrv_GoodsBrandsListPid_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GoodsSrvServer).GoodsBrandsListPid(ctx, req.(*GoodsBrandsListPidReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -547,6 +531,24 @@ func _GoodsSrv_GoodsCarouselList_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GoodsSrv_NewGoods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(NewGoodsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoodsSrvServer).NewGoods(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GoodsSrv_NewGoods_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoodsSrvServer).NewGoods(ctx, req.(*NewGoodsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GoodsSrv_ServiceDesc is the grpc.ServiceDesc for GoodsSrv service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -569,10 +571,6 @@ var GoodsSrv_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchList",
 			Handler:    _GoodsSrv_SearchList_Handler,
-		},
-		{
-			MethodName: "GoodsBrandsListPid",
-			Handler:    _GoodsSrv_GoodsBrandsListPid_Handler,
 		},
 		{
 			MethodName: "GoodsBrandsList",
@@ -609,6 +607,10 @@ var GoodsSrv_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GoodsCarouselList",
 			Handler:    _GoodsSrv_GoodsCarouselList_Handler,
+		},
+		{
+			MethodName: "NewGoods",
+			Handler:    _GoodsSrv_NewGoods_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

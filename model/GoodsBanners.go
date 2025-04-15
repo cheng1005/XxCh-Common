@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type Goodsbanners struct {
+type GoodsBanners struct {
 	Id        uint64         `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
 	CreatedAt time.Time      `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
 	UpdatedAt time.Time      `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
@@ -18,6 +18,6 @@ type Goodsbanners struct {
 	IsActive  int64          `gorm:"column:is_active;type:bigint;comment:''是否启用状态'';not null;" json:"is_active"`      // ''是否启用状态''
 }
 
-func (g *Goodsbanners) TableName() string {
+func (g *GoodsBanners) TableName() string {
 	return "GoodsBanners"
 }

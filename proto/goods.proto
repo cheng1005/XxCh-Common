@@ -51,22 +51,8 @@ message GoodsList{
 message GoodsListResponse {
   repeated GoodsList list = 1;
 }
-//商品品牌
-message GoodsBrandsListPidReq{
-  int64 Pid=1;
-}
-message GoodsBrandsListPidResp{
-  repeated GoodsBrandsListPid List=1;
-}
-message GoodsBrandsListPid {
-  string  BrandName            =1; // 品牌名称
-  string  BrandFirstLetter     =2; // 品牌首字母
-  string  BrandImage           =3; // 品牌图片，存储图片路径等信息
-  int64  BrandSort            =4; // 品牌排序
-  int64  DisplayStatus        =5; // 显示状态，1表示显示，0表示不显示
-  string  BrandDescription     =6; // 品牌描述
 
-}
+//商品品牌
 
 message GoodsBrandsListReq{
   int64 Pid=1;
@@ -277,6 +263,13 @@ message HotGoodsList {
 }
 
 
+//新品推荐
+message NewGoodsRequest {
+
+}
+message NewGoodsResponse {
+  repeated GoodsList NewGoodsList = 1;
+}
 service GoodsSrv {
   // 分类管理
   rpc CreateCategory (ProductCategoryReq) returns (ProductCategoryResp);
@@ -287,7 +280,6 @@ service GoodsSrv {
   rpc SearchList(GoodsListRequest) returns(GoodsListResponse);
 
   //商品品牌
-  rpc GoodsBrandsListPid(GoodsBrandsListPidReq)returns(GoodsBrandsListPidResp);
   rpc GoodsBrandsList(GoodsBrandsListReq)returns(GoodsBrandsListResp);
   rpc GoodsBrandsAdd(GoodsBrandsAddReq)returns(GoodsBrandsAddResp);
 
@@ -305,4 +297,6 @@ service GoodsSrv {
   rpc GoodsCarousel (GoodsCarouselReq) returns (GoodsCarouselResp);   // TODO 添加商品轮播图
   rpc GoodsCarouselList (GoodsCarouselListReq) returns (GoodsCarouselListResp);   // TODO 添加商品轮播图
 
+  // TODO 新品推荐
+  rpc NewGoods (NewGoodsRequest) returns (NewGoodsResponse);
 }
