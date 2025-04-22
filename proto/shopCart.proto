@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package proto;
+option go_package="./shopCart";
+
+//添加购物车
+message AddShopCartRequest {
+  uint64 UserId = 1;
+  uint64 GoodsId = 2;
+  uint64 num = 3;
+}
+message  AddShopCartResponse {
+
+}
+
+//查看购物车
+message ShopCartListRequest {
+  uint64 UserId = 1;
+  uint64 Page = 2;
+  uint64 Size = 3;
+  uint64 Content = 4;
+}
+message ShopCartList{
+  uint64 ShopCartId = 1;
+  uint64 UserId = 2;
+  uint64 GoodsId = 3;
+  uint64 num = 4;
+  uint64 TotalPrice = 5;
+}
+message  ShopCartListResponse {
+ repeated ShopCartList List = 1;
+}
+
+//修改购物车
+message UpdateShopCartRequest {
+  uint64 UserId = 1;
+  uint64 ShopCartId = 2;
+  uint64 num = 3;
+}
+message  UpdateShopCartResponse {
+
+}
+
+//购物车结算
+message ShopCartCheckoutRequest {
+  uint64 UserId = 1;
+}
+message  ShopCartCheckoutResponse {
+  string PayUrl = 1;
+}
+
+
+service ShopCartSrv {
+  rpc  AddShopCart(AddShopCartRequest) returns(AddShopCartResponse);
+  rpc  ShopCartList(ShopCartListRequest) returns(ShopCartListResponse);
+  rpc  UpdateShopCart(UpdateShopCartRequest) returns(UpdateShopCartResponse);
+  rpc  ShopCartCheckout(ShopCartCheckoutRequest) returns(ShopCartCheckoutResponse);
+
+}

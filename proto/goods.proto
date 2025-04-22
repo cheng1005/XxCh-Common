@@ -22,7 +22,6 @@ message GoodsAddRequest {
   int64  SalesVolume = 14;
 
 }
-
 message GoodsAddResponse {
 
 }
@@ -47,13 +46,11 @@ message GoodsList{
   int64  ExpiryDate = 14;
   int64  SalesVolume = 15;
 }
-
 message GoodsListResponse {
   repeated GoodsList list = 1;
 }
 
 //商品品牌
-
 message GoodsBrandsListReq{
   int64 Pid=1;
 }
@@ -69,6 +66,7 @@ message GoodsBrandsList {
   string  BrandDescription     =6; // 品牌描述
 
 }
+
 message GoodsBrandsAddReq{
   string  BrandName            =1; // 品牌名称
   string  BrandFirstLetter     =2; // 品牌首字母
@@ -76,8 +74,8 @@ message GoodsBrandsAddReq{
   int64  BrandSort            =4; // 品牌排序
   int64  DisplayStatus        =5; // 显示状态，1表示显示，0表示不显示
   string  BrandDescription     =6; // 品牌描述
-
 }
+
 message GoodsBrandsAddResp{
   int64 GoodBrand=1;
 }
