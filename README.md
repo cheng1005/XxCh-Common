@@ -1,6 +1,4 @@
 # XxCh
-# like-shop-two
-
 
 创建 dev.yaml文件  配置nacos 信息即可
 
