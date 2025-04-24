@@ -66,6 +66,7 @@ type GoodSeckillTimes struct {
 	SeckillId     int64          `gorm:"column:seckill_id;type:bigint;comment:''参与秒杀商品的ID'';not null;" json:"seckill_id"`       // ''参与秒杀商品的ID''
 	SeckillPrice  float64        `gorm:"column:seckill_price;type:decimal(10, 2);comment:''秒杀价格'';not null;" json:"seckill_price"` // ''秒杀价格''
 	SeckillStatus int64          `gorm:"column:seckill_status;type:bigint;comment:''秒杀是否开启'';not null;" json:"seckill_status"`   // ''秒杀是否开启''
+	SeckillNum    int32          `gorm:"column:seckill_num;type:int;comment:''秒杀商品的数量'';not null;" json:"seckill_num"`          // ''秒杀商品的数量''
 }
 
 func (g *GoodSeckillTimes) TableName() string {
