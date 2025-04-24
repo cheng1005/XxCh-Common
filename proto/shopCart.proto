@@ -23,7 +23,7 @@ message ShopCartListRequest {
 message ShopCartList{
   uint64 ItemId = 1;
   string GoodsImage = 2;
-  uint64 GoodsName = 3;
+  string GoodsName = 3;
   float  GoodsPrice = 4;
   uint64 num = 5;
   uint64 TotalPrice = 6;
