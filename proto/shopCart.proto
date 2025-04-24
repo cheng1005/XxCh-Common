@@ -18,14 +18,15 @@ message ShopCartListRequest {
   uint64 UserId = 1;
   uint64 Page = 2;
   uint64 Size = 3;
-  uint64 Content = 4;
+  string Content = 4;
 }
 message ShopCartList{
-  uint64 ShopCartId = 1;
-  uint64 UserId = 2;
-  uint64 GoodsId = 3;
-  uint64 num = 4;
-  uint64 TotalPrice = 5;
+  uint64 ItemId = 1;
+  string GoodsImage = 2;
+  uint64 GoodsName = 3;
+  float  GoodsPrice = 4;
+  uint64 num = 5;
+  uint64 TotalPrice = 6;
 }
 message  ShopCartListResponse {
  repeated ShopCartList List = 1;
@@ -34,8 +35,7 @@ message  ShopCartListResponse {
 //修改购物车
 message UpdateShopCartRequest {
   uint64 UserId = 1;
-  uint64 ShopCartId = 2;
-  uint64 num = 3;
+  uint64 num = 2;
 }
 message  UpdateShopCartResponse {
 
