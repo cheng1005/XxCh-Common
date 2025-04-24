@@ -7,6 +7,7 @@ toolchain go1.23.6
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-redis/redis/v8 v8.11.5
+	github.com/golangblogs/gojwt v0.0.0-20231007025427-9a57ce3b7b94
 	github.com/hashicorp/consul/api v1.32.0
 	github.com/nacos-group/nacos-sdk-go/v2 v2.2.9
 	github.com/spf13/viper v1.20.1
@@ -50,6 +51,7 @@ require (
 	github.com/cloudwego/base64x v0.1.4 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
 	github.com/deckarep/golang-set v1.7.1 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect

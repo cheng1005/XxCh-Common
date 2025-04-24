@@ -8,9 +8,9 @@ import (
 )
 
 var (
-	DB           *gorm.DB
-	RDB          *redis.Client
-	Config       *config.AppConfig
-	Nacos        *config.Nacos
-	ShopCartGrpc shopCart.ShopCartSrvClient
+	DB       *gorm.DB
+	RDB      *redis.Client
+	Config   *config.AppConfig
+	Nacos    *config.Nacos
+	CartGrpc shopCart.ShopCartSrvClient
 )
