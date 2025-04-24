@@ -30,6 +30,7 @@ message ShopCartList{
 }
 message  ShopCartListResponse {
  repeated ShopCartList List = 1;
+ int64  Count = 2;
 }
 
 //修改购物车
