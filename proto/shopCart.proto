@@ -35,7 +35,7 @@ message  ShopCartListResponse {
 
 //修改购物车
 message UpdateShopCartRequest {
-  uint64 UserId = 1;
+  uint64 ItemId = 1;
   uint64 num = 2;
 }
 message  UpdateShopCartResponse {
