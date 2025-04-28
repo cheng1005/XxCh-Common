@@ -78,14 +78,14 @@ func (g *GoodSeckillTimes) TableName() string {
 }
 
 type GoodImages struct {
-	Id        uint64    `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
-	CreatedAt time.Time `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
-	UpdatedAt time.Time `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
-	DeletedAt time.Time `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
-	GoodId    int64     `gorm:"column:good_id;type:bigint;comment:''商品的ID'';not null;" json:"good_id"`                                       // ''商品的ID''
-	Image     string    `gorm:"column:image;type:varchar(255);comment:''图片'';not null;" json:"image"`                                         // ''图片''
-	ImageType int64     `gorm:"column:image_type;type:bigint;comment:''商品图片资源的类型,1.图片,2.视频;not null;default:1;" json:"image_type"` // ''商品图片资源的类型,1.图片,2.视频
-	IsMain    int64     `gorm:"column:is_main;type:bigint;comment:''是否为主图,1.是,2.否'';not null;default:1;" json:"is_main"`                 // ''是否为主图,1.是,2.否''
+	Id        uint64         `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
+	CreatedAt time.Time      `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
+	UpdatedAt time.Time      `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
+	GoodId    int64          `gorm:"column:good_id;type:bigint;comment:''商品的ID'';not null;" json:"good_id"`                                       // ''商品的ID''
+	Image     string         `gorm:"column:image;type:varchar(255);comment:''图片'';not null;" json:"image"`                                         // ''图片''
+	ImageType int64          `gorm:"column:image_type;type:bigint;comment:''商品图片资源的类型,1.图片,2.视频;not null;default:1;" json:"image_type"` // ''商品图片资源的类型,1.图片,2.视频
+	IsMain    int64          `gorm:"column:is_main;type:bigint;comment:''是否为主图,1.是,2.否'';not null;default:1;" json:"is_main"`                 // ''是否为主图,1.是,2.否''
 }
 
 func (g *GoodImages) TableName() string {
@@ -93,19 +93,19 @@ func (g *GoodImages) TableName() string {
 }
 
 type GoodSkus struct {
-	Id          uint64    `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
-	CreatedAt   time.Time `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
-	UpdatedAt   time.Time `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
-	DeletedAt   time.Time `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
-	GoodId      int64     `gorm:"column:good_id;type:bigint;comment:''商品ID'';not null;" json:"good_id"`                     // ''商品ID''
-	Specs       int64     `gorm:"column:specs;type:bigint;comment:''规格组合'';not null;" json:"specs"`                       // ''规格组合''
-	Code        int64     `gorm:"column:code;type:bigint;comment:''规格编码'';not null;" json:"code"`                         // ''规格编码''
-	RetailPrice float64   `gorm:"column:retail_price;type:decimal(10, 2);comment:''零售价'';not null;" json:"retail_price"`   // ''零售价''
-	CostPrice   float64   `gorm:"column:cost_price;type:decimal(10, 2);comment:''商品的成本价'';not null;" json:"cost_price"` // ''商品的成本价''
-	Stock       int64     `gorm:"column:stock;type:bigint;comment:''商品规格库存'';not null;" json:"stock"`                   // ''商品规格库存''
-	StockAlert  int64     `gorm:"column:stock_alert;type:bigint;comment:''库存预警值'';not null;" json:"stock_alert"`         // ''库存预警值''
-	Weight      float64   `gorm:"column:weight;type:decimal(10, 2);comment:''重量(kg)'';not null;" json:"weight"`             // ''重量(kg)''
-	Image       string    `gorm:"column:image;type:varchar(255);comment:''商品规格图片'';not null;" json:"image"`             // ''商品规格图片''
+	Id          uint64         `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
+	CreatedAt   time.Time      `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
+	UpdatedAt   time.Time      `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
+	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
+	GoodId      int64          `gorm:"column:good_id;type:bigint;comment:''商品ID'';not null;" json:"good_id"`                     // ''商品ID''
+	Specs       int64          `gorm:"column:specs;type:bigint;comment:''规格组合'';not null;" json:"specs"`                       // ''规格组合''
+	Code        int64          `gorm:"column:code;type:bigint;comment:''规格编码'';not null;" json:"code"`                         // ''规格编码''
+	RetailPrice float64        `gorm:"column:retail_price;type:decimal(10, 2);comment:''零售价'';not null;" json:"retail_price"`   // ''零售价''
+	CostPrice   float64        `gorm:"column:cost_price;type:decimal(10, 2);comment:''商品的成本价'';not null;" json:"cost_price"` // ''商品的成本价''
+	Stock       int64          `gorm:"column:stock;type:bigint;comment:''商品规格库存'';not null;" json:"stock"`                   // ''商品规格库存''
+	StockAlert  int64          `gorm:"column:stock_alert;type:bigint;comment:''库存预警值'';not null;" json:"stock_alert"`         // ''库存预警值''
+	Weight      float64        `gorm:"column:weight;type:decimal(10, 2);comment:''重量(kg)'';not null;" json:"weight"`             // ''重量(kg)''
+	Image       string         `gorm:"column:image;type:varchar(255);comment:''商品规格图片'';not null;" json:"image"`             // ''商品规格图片''
 }
 
 func (g *GoodSkus) TableName() string {
@@ -113,13 +113,13 @@ func (g *GoodSkus) TableName() string {
 }
 
 type GoodSpecs struct {
-	Id         uint64    `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
-	CreatedAt  time.Time `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
-	UpdatedAt  time.Time `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
-	DeletedAt  time.Time `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
-	GoodId     int64     `gorm:"column:good_id;type:bigint;comment:''商品的ID'';not null;" json:"good_id"`          // ''商品的ID''
-	SpecName   string    `gorm:"column:spec_name;type:varchar(30);comment:''规格名称'';not null;" json:"spec_name"` // ''规格名称''
-	SpecValues int64     `gorm:"column:spec_values;type:bigint;comment:''规格值'';not null;" json:"spec_values"`    // ''规格值''
+	Id         uint64         `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
+	CreatedAt  time.Time      `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
+	UpdatedAt  time.Time      `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
+	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
+	GoodId     int64          `gorm:"column:good_id;type:bigint;comment:''商品的ID'';not null;" json:"good_id"`          // ''商品的ID''
+	SpecName   string         `gorm:"column:spec_name;type:varchar(30);comment:''规格名称'';not null;" json:"spec_name"` // ''规格名称''
+	SpecValues int64          `gorm:"column:spec_values;type:bigint;comment:''规格值'';not null;" json:"spec_values"`    // ''规格值''
 }
 
 func (g *GoodSpecs) TableName() string {
@@ -127,12 +127,12 @@ func (g *GoodSpecs) TableName() string {
 }
 
 type GoodSpecValues struct {
-	Id        uint64    `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
-	CreatedAt time.Time `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
-	UpdatedAt time.Time `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
-	DeletedAt time.Time `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
-	SpecId    int64     `gorm:"column:spec_id;type:bigint;comment:''规格ID'';not null;" json:"spec_id"` // ''规格ID''
-	Values    int64     `gorm:"column:values;type:bigint;comment:''规格值'';not null;" json:"values"`   // ''规格值''
+	Id        uint64         `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
+	CreatedAt time.Time      `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
+	UpdatedAt time.Time      `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
+	SpecId    int64          `gorm:"column:spec_id;type:bigint;comment:''规格ID'';not null;" json:"spec_id"` // ''规格ID''
+	Values    int64          `gorm:"column:values;type:bigint;comment:''规格值'';not null;" json:"values"`   // ''规格值''
 }
 
 func (g *GoodSpecValues) TableName() string {
