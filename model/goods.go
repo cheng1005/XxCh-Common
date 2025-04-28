@@ -7,13 +7,16 @@ import (
 
 // Goods 商品表
 type Goods struct {
-	GoodId       uint64         `gorm:"column:good_id;type:bigint UNSIGNED;primaryKey;not null;" json:"good_id"`
+	Id           uint64         `gorm:"column:id;type:bigint UNSIGNED;primaryKey;not null;" json:"id"`
 	CreatedAt    time.Time      `gorm:"column:created_at;type:datetime(3);default:NULL;" json:"created_at"`
 	UpdatedAt    time.Time      `gorm:"column:updated_at;type:datetime(3);default:NULL;" json:"updated_at"`
 	DeletedAt    gorm.DeletedAt `gorm:"column:deleted_at;type:datetime(3);default:NULL;" json:"deleted_at"`
 	GoodName     string         `gorm:"column:good_name;type:varchar(30);comment:''商品的名称'';not null;" json:"good_name"`            // ''商品的名称''
+	ProductCode  string         `gorm:"column:product_code;type:varchar(50);comment:''商品的编码'';not null;" json:"product_code"`      // ''商品的编码''
 	GoodPrice    float64        `gorm:"column:good_price;type:decimal(10, 2);comment:''商品的价格'';not null;" json:"good_price"`       // ''商品的价格''
 	ParentId     int8           `gorm:"column:parent_id;type:tinyint;comment:''分类ID'';not null;" json:"parent_id"`                    // ''分类ID''
+	GoodNum      int64          `gorm:"column:good_num;type:bigint;comment:''商品的数量'';not null;" json:"good_num"`                   // ''商品的数量''
+	GoodStatus   int64          `gorm:"column:good_status;type:bigint;comment:''商品的状态'';not null;" json:"good_status"`             // ''商品的状态''
 	Image        string         `gorm:"column:image;type:varchar(225);comment:''商品的主图片'';not null;" json:"image"`                 // ''商品的主图片''
 	Feature      string         `gorm:"column:feature;type:varchar(225);comment:''商品的卖点'';not null;" json:"feature"`               // ''商品的卖点''
 	GoodImage    string         `gorm:"column:good_image;type:varchar(225);comment:''商品主图'';not null;" json:"good_image"`           // ''商品主图''
@@ -24,7 +27,6 @@ type Goods struct {
 	GoodSupplier string         `gorm:"column:good_supplier;type:varchar(100);comment:''供货商'';not null;" json:"good_supplier"`       // ''供货商''
 	GoodSales    int64          `gorm:"column:good_sales;type:bigint;comment:''销售量'';not null;" json:"good_sales"`                   // ''销售量''
 	GoodViews    int64          `gorm:"column:good_views;type:bigint;comment:''商品的浏览量'';not null;" json:"good_views"`             // ''商品的浏览量''
-	GoodStock    int64          `gorm:"column:good_stock;type:bigint;comment:''商品数量库存'';not null;" json:"good_stock"`             // ''商品数量库存''
 }
 
 func (g *Goods) TableName() string {
