@@ -23,6 +23,7 @@ const (
 	ShopCartSrv_ShopCartList_FullMethodName     = "/proto.ShopCartSrv/ShopCartList"
 	ShopCartSrv_UpdateShopCart_FullMethodName   = "/proto.ShopCartSrv/UpdateShopCart"
 	ShopCartSrv_ShopCartCheckout_FullMethodName = "/proto.ShopCartSrv/ShopCartCheckout"
+	ShopCartSrv_RemoveShopCart_FullMethodName   = "/proto.ShopCartSrv/RemoveShopCart"
 )
 
 // ShopCartSrvClient is the client API for ShopCartSrv service.
@@ -33,6 +34,7 @@ type ShopCartSrvClient interface {
 	ShopCartList(ctx context.Context, in *ShopCartListRequest, opts ...grpc.CallOption) (*ShopCartListResponse, error)
 	UpdateShopCart(ctx context.Context, in *UpdateShopCartRequest, opts ...grpc.CallOption) (*UpdateShopCartResponse, error)
 	ShopCartCheckout(ctx context.Context, in *ShopCartCheckoutRequest, opts ...grpc.CallOption) (*ShopCartCheckoutResponse, error)
+	RemoveShopCart(ctx context.Context, in *RemoveShopCartRequest, opts ...grpc.CallOption) (*RemoveShopCartResponse, error)
 }
 
 type shopCartSrvClient struct {
@@ -83,6 +85,16 @@ func (c *shopCartSrvClient) ShopCartCheckout(ctx context.Context, in *ShopCartCh
 	return out, nil
 }
 
+func (c *shopCartSrvClient) RemoveShopCart(ctx context.Context, in *RemoveShopCartRequest, opts ...grpc.CallOption) (*RemoveShopCartResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RemoveShopCartResponse)
+	err := c.cc.Invoke(ctx, ShopCartSrv_RemoveShopCart_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ShopCartSrvServer is the server API for ShopCartSrv service.
 // All implementations must embed UnimplementedShopCartSrvServer
 // for forward compatibility
@@ -91,6 +103,7 @@ type ShopCartSrvServer interface {
 	ShopCartList(context.Context, *ShopCartListRequest) (*ShopCartListResponse, error)
 	UpdateShopCart(context.Context, *UpdateShopCartRequest) (*UpdateShopCartResponse, error)
 	ShopCartCheckout(context.Context, *ShopCartCheckoutRequest) (*ShopCartCheckoutResponse, error)
+	RemoveShopCart(context.Context, *RemoveShopCartRequest) (*RemoveShopCartResponse, error)
 	mustEmbedUnimplementedShopCartSrvServer()
 }
 
@@ -109,6 +122,9 @@ func (UnimplementedShopCartSrvServer) UpdateShopCart(context.Context, *UpdateSho
 }
 func (UnimplementedShopCartSrvServer) ShopCartCheckout(context.Context, *ShopCartCheckoutRequest) (*ShopCartCheckoutResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ShopCartCheckout not implemented")
+}
+func (UnimplementedShopCartSrvServer) RemoveShopCart(context.Context, *RemoveShopCartRequest) (*RemoveShopCartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveShopCart not implemented")
 }
 func (UnimplementedShopCartSrvServer) mustEmbedUnimplementedShopCartSrvServer() {}
 
@@ -195,6 +211,24 @@ func _ShopCartSrv_ShopCartCheckout_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ShopCartSrv_RemoveShopCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveShopCartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShopCartSrvServer).RemoveShopCart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShopCartSrv_RemoveShopCart_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShopCartSrvServer).RemoveShopCart(ctx, req.(*RemoveShopCartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ShopCartSrv_ServiceDesc is the grpc.ServiceDesc for ShopCartSrv service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -217,6 +251,10 @@ var ShopCartSrv_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ShopCartCheckout",
 			Handler:    _ShopCartSrv_ShopCartCheckout_Handler,
+		},
+		{
+			MethodName: "RemoveShopCart",
+			Handler:    _ShopCartSrv_RemoveShopCart_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

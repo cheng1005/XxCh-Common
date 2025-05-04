@@ -51,11 +51,18 @@ message  ShopCartCheckoutResponse {
   string PayUrl = 1;
 }
 
-
+//购物车商品移除
+message RemoveShopCartRequest {
+  uint64 UserId = 1;
+  uint64 GoodsId = 2;
+}
+message  RemoveShopCartResponse {
+}
 service ShopCartSrv {
   rpc  AddShopCart(AddShopCartRequest) returns(AddShopCartResponse);
   rpc  ShopCartList(ShopCartListRequest) returns(ShopCartListResponse);
   rpc  UpdateShopCart(UpdateShopCartRequest) returns(UpdateShopCartResponse);
   rpc  ShopCartCheckout(ShopCartCheckoutRequest) returns(ShopCartCheckoutResponse);
+  rpc  RemoveShopCart(RemoveShopCartRequest) returns(RemoveShopCartResponse);
 
 }
