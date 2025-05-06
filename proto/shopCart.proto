@@ -64,5 +64,4 @@ service ShopCartSrv {
   rpc  UpdateShopCart(UpdateShopCartRequest) returns(UpdateShopCartResponse);
   rpc  ShopCartCheckout(ShopCartCheckoutRequest) returns(ShopCartCheckoutResponse);
   rpc  RemoveShopCart(RemoveShopCartRequest) returns(RemoveShopCartResponse);
-
 }
