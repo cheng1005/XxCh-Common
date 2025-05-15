@@ -3,6 +3,7 @@ package global
 import (
 	"github.com/cheng1005/XxCh-Common/common/config"
 	"github.com/cheng1005/XxCh-Common/proto/shopCart"
+	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/go-redis/redis/v8"
 	"gorm.io/gorm"
 )
@@ -13,4 +14,5 @@ var (
 	Config   *config.AppConfig
 	Nacos    *config.Nacos
 	CartGrpc shopCart.ShopCartSrvClient
+	Es       *elasticsearch.Client
 )

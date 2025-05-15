@@ -1,4 +1,4 @@
-package dao
+package dao_mysql
 
 import "github.com/cheng1005/XxCh-Common/common/global"
 

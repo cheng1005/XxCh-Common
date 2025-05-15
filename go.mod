@@ -6,8 +6,10 @@ toolchain go1.23.6
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/elastic/go-elasticsearch/v7 v7.17.10
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-redis/redis/v8 v8.11.5
+	github.com/gorilla/websocket v1.5.3
 	github.com/hashicorp/consul/api v1.32.0
 	github.com/nacos-group/nacos-sdk-go/v2 v2.2.9
 	github.com/smartwalle/alipay/v3 v3.2.25
