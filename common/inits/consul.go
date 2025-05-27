@@ -61,3 +61,26 @@ func InitConsul() {
 	}
 	log.Println("consul register success")
 }
+
+func NewConsulClients(host string, port int) (*Consul, error) {
+
+	config := api.DefaultConfig()
+	config.Address = fmt.Sprintf("%s:%d", host, port)
+
+	client, err := api.NewClient(config)
+	if err != nil {
+		return nil, nil
+	}
+	return &Consul{client}, nil
+}
+
+func (c *Consul) Registers() error {
+	registration := api.AgentServiceRegistration{
+		ID:      "",
+		Name:    "",
+		Tags:    nil,
+		Port:    0,
+		Address: "",
+	}
+	return c.consulClient.Agent().ServiceRegister(&registration)
+}
