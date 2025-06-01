@@ -26,9 +26,11 @@ type Nacos struct {
 	Aliyun struct {
 		AccessKeyID     string `json:"AccessKeyID"`
 		AccessKeySecret string `json:"AccessKeySecret"`
+		Bucket          string `json:"bucket"`
+		URL             string `json:"Url"`
 	} `json:"aliyun"`
 	Alipay struct {
-		AppId      string `json:"AppId"`
+		AppID      string `json:"AppId"`
 		PrivateKey string `json:"PrivateKey"`
 		NotifyURL  string `json:"NotifyURL"`
 		ReturnURL  string `json:"ReturnURL"`
@@ -38,4 +40,10 @@ type Nacos struct {
 		Host string `json:"host"`
 		Port int    `json:"port"`
 	} `json:"consul"`
+	QiNiuYun struct {
+		Ak     string `json:"AK"`
+		Sk     string `json:"Sk"`
+		Bucket string `json:"Bucket"`
+		URL    string `json:"Url"`
+	} `json:"QiNiuYun"`
 }
