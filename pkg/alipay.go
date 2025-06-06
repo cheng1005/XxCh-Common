@@ -10,7 +10,7 @@ func AliPay(name, number string, totalPrice string) string {
 
 	var (
 		privateKey = global.Nacos.Alipay.PrivateKey // 必须，上一步中使用 RSA签名验签工具 生成的私钥
-		appId      = global.Nacos.Alipay.AppId
+		appId      = global.Nacos.Alipay.AppID
 	)
 	client, err := alipay.New(appId, privateKey, false)
 	if err != nil {
